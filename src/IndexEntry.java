@@ -17,6 +17,7 @@ public class IndexEntry {
 
     private int key;
     private int pageNo;
+
     public IndexEntry(int key, int page){
         this.key = key;
         this.pageNo = page;

@@ -1,6 +1,10 @@
 public class Record {//implements Comparable<Record> {
 
 
+    public void setKey(int key) {
+        this.key = key;
+    }
+
     private int key;
     private char[] charset;
     private boolean isDeleted;
@@ -9,11 +13,15 @@ public class Record {//implements Comparable<Record> {
         return offsetPointer;
     }
 
+    public void setOffsetPointer(int offsetPointer) {
+        this.offsetPointer = offsetPointer;
+    }
+
     private int offsetPointer;
 
-    Record(int key, char[] charset){
+    Record(char[] charset){
         this.charset = charset;
-        this.key = key;
+        this.key = -1;
         this.offsetPointer = -1;
         this.isDeleted = false;
     }
