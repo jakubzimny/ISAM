@@ -41,17 +41,28 @@ public class ISAM {
         writes=0;
     }
 
+    public void deleteAll(){
+        for(int i=1; i<=getPagesNumber(); i++){
+            ArrayList<Record> page = getPage(i);
+            for(Record r: page){
+                delete(r.getKey());
+            }
+        }
+    }
+
     public void insertRandomRecords(int n) {
         Random rand = new Random();
         for(int i=0; i<n; i++) {
             StringBuilder sb = new StringBuilder("");
-            int size = rand.nextInt(10) + 1;
+            int size = rand.nextInt(30) + 1;
             char[] charset = new char[size];
             for (int j=0; j<size;j++){
                 charset[j] = (char)(rand.nextInt(('~' - '!')+1)+'!');
             }
             insert(new Record(charset), -1);
         }
+        File f = new File(dataFile);
+        System.out.println("Wielkość pliku: "+f.length());
     }
 
     public void saveIndex() {
@@ -215,7 +226,7 @@ public class ISAM {
         ArrayList<Record> page = getPage(pageNo);
         for (Record r : page) {
             if (r.getKey() == key) {
-                updateIndex(page, key, pageNo);
+                //updateIndex(page, key, pageNo);
                 r.setKey(-1);
                 r.delete();
                 savePage(page, pageNo, dataFile);
@@ -452,6 +463,8 @@ public class ISAM {
 
 
     private void compensate(){
+        //compensates for design error which causes unnecessary I/O operations repeating
+        //in very specific situation, it is needed to calculate I/O operations correctly
         writes--;
         reads--;
     }
