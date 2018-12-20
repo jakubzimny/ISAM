@@ -6,6 +6,11 @@ public class Record {//implements Comparable<Record> {
     }
 
     private int key;
+
+    public void setCharset(char[] charset) {
+        this.charset = charset;
+    }
+
     private char[] charset;
     private boolean isDeleted;
 
@@ -25,12 +30,7 @@ public class Record {//implements Comparable<Record> {
         this.offsetPointer = -1;
         this.isDeleted = false;
     }
-    Record(int key, char[] charset, int offsetPointer){
-        this.charset = charset;
-        this.key = key;
-        this.offsetPointer = offsetPointer;
-        this.isDeleted = false;
-    }
+    Record(){ }
     Record(int key, char[] charset, boolean isDeleted, int offsetPointer){
         this.charset = charset;
         this.key = key;
