@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class ISAM {
 
-    private final int BLOCKING_FACTOR = 10;
+    private final int BLOCKING_FACTOR = 1000;
     private final int RECORD_SIZE = 60 + 4 + 4 + 1;
     private final double ALPHA = 0.6;
     private final double PRIMARY_TO_OVERFLOW_RATIO = 0.4;
@@ -335,7 +335,6 @@ public class ISAM {
             ArrayList<Record> temp = getPage(calculatePageNumber(oldOffset));
             int lastPageNo = calculatePageNumber(oldOffset);
             int prevRecordPage = lastPageNo;
-            compensate();
             boolean done = false;
             Record overflowRecord = temp.get(calculatePageOffset(oldOffset));
             Record previousRecord = new Record();
@@ -460,12 +459,4 @@ public class ISAM {
         return index.size();
     }
 
-
-
-    private void compensate(){
-        //compensates for design error which causes unnecessary I/O operations repeating
-        //in very specific situation, it is needed to calculate I/O operations correctly
-        writes--;
-        reads--;
-    }
 }
