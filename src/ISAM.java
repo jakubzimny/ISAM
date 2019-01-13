@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class ISAM {
 
-    private final int BLOCKING_FACTOR = 1000;
+    private final int BLOCKING_FACTOR = 10;
     private final int RECORD_SIZE = 60 + 4 + 4 + 1;
     private final double ALPHA = 0.6;
     private final double PRIMARY_TO_OVERFLOW_RATIO = 0.4;
@@ -319,6 +319,10 @@ public class ISAM {
             }
             if (placement == pageBuffer.size()) { // if can be placed at the end then insert in primary area
                 pageBuffer.add(r);
+                if(pageBuffer.get(placement-1).getOffsetPointer() != -1){
+                    r.setOffsetPointer(pageBuffer.get(placement-1).getOffsetPointer());
+                    pageBuffer.get(placement-1).setOffsetPointer(-1);
+                }
                 savePage(pageBuffer, pageNo, dataFile);
             } else { // else overflow area
                 int offsetPointer = saveToOverflow(r);
